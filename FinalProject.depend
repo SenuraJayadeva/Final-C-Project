@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1594756808 source:d:\education\jpura\cs\c programming\finalproject\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<dos.h>
+
