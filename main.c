@@ -158,7 +158,10 @@ void addItemDetails()
         printf("\n");
 
         printf("\tEnter item ID : ");
+
         scanf("%d", &itemID);
+
+
 
         printf("\tEnter Price for the Item No.%d : ",itemID);
         scanf("%d", &price);
@@ -636,21 +639,21 @@ void storeUnloadingDetails()
 
     printf("\n");
 
-    FILE *cfPtr;
-
-
-    cfPtr = fopen("itemsUnloadingReport.txt","a");
-
-    if(cfPtr == NULL)
-    {
-        printf("Cannot create file\n");
-        return -1;
-    }
 
 
 
     while(option=='y')
     {
+        FILE *cfPtr;
+
+
+        cfPtr = fopen("itemsUnloadingReport.txt","a");
+
+        if(cfPtr == NULL)
+        {
+            printf("Cannot create file\n");
+            return -1;
+        }
 
 
         displayLoadingDetails(); //display details of items
@@ -685,16 +688,15 @@ void storeUnloadingDetails()
             /*saving itemID,number of Items,vehicle id,year,month,date into the itemsUnloadingReport text file*/
             fprintf(cfPtr,"%d\t",salesDetailsUnloading[0][i]);
         }
+        printf("\n");
 
-        fprintf(cfPtr,"\n");
 
-        /*Close the Pointer*/
-        fclose(cfPtr);
+         fclose(cfPtr);/*Close the Pointer*/
 
         /*Calculates sales to get the amount of sales and Total Price*/
         calculateSales();
 
-        printf("\n");
+
         /*ask to enter another item*/
         printf("\tDo you unloading another item (y/n) : ");
         scanf(" %c",&option);
@@ -702,7 +704,7 @@ void storeUnloadingDetails()
 
 
 
-    fclose(cfPtr);
+
 }
 
 void readUnloadingDetails(int *opt)
@@ -765,7 +767,7 @@ void calculateSales()
 
     while(!feof(cfPtr))
     {
-        printf("\t%d\t%d\t\t %d\t\t%d\t %d-%d-%d\n",loadingitemDetails[i][0],loadingitemDetails[i][1],loadingitemDetails[i][2],loadingitemDetails[i][3],loadingitemDetails[i][4],loadingitemDetails[i][5],loadingitemDetails[i][6]);
+        //printf("\t%d\t%d\t\t %d\t\t%d\t %d-%d-%d\n",loadingitemDetails[i][0],loadingitemDetails[i][1],loadingitemDetails[i][2],loadingitemDetails[i][3],loadingitemDetails[i][4],loadingitemDetails[i][5],loadingitemDetails[i][6]);
 
         i++;
         /*getting itemID,number of Items,Total Price,year,month,date into the itemsLoadingReport text file*/
@@ -788,7 +790,7 @@ void calculateSales()
     printf("\n\tUnloading\n");
     while(!feof(cfPtr))
     {
-        printf("\t%d\t%d\t\t %d\t\t %d-%d-%d\n",unloadingitemDetails[j][0],unloadingitemDetails[j][1],unloadingitemDetails[j][2],unloadingitemDetails[j][3],unloadingitemDetails[j][4],unloadingitemDetails[j][5]);
+        //printf("\t%d\t%d\t\t %d\t\t %d-%d-%d\n",unloadingitemDetails[j][0],unloadingitemDetails[j][1],unloadingitemDetails[j][2],unloadingitemDetails[j][3],unloadingitemDetails[j][4],unloadingitemDetails[j][5]);
         j++;
         /*getting itemID,number of Items,Total Price,year,month,date into the itemsLoadingReport text file*/
         fscanf(cfPtr,"%d %d %d %d %d %d", &unloadingitemDetails[j][0],&unloadingitemDetails[j][1],&unloadingitemDetails[j][2],&unloadingitemDetails[j][3],&unloadingitemDetails[j][4],&unloadingitemDetails[j][5]);
@@ -803,12 +805,12 @@ void calculateSales()
     cfPtr = fopen("salesReport.txt","w");
 
     /* Calculate Number of sales for each Item */
-    for(int k = 0; k < i;k++)
+    for(int k = 0; k <= i;k++)
     {
-        for(int p = 0; p < j;p++)
+        for(int p = 0; p <= j;p++)
         {
-            printf("\nj is %d\n",j);
-            printf("\tloading item %d\tunloading %d\n",loadingitemDetails[k][0],unloadingitemDetails[p][0]);
+            //printf("\nj is %d\n",j);
+            //printf("\tloading item %d\tunloading %d\n",loadingitemDetails[k][0],unloadingitemDetails[p][0]);
 
             //check the loading item id and unloading id is equal
             if(loadingitemDetails[k][0] == unloadingitemDetails[p][0])
@@ -863,10 +865,29 @@ void displaySalesReport(int *opt)
 
     fclose(cfPtr);
 
+    /*
+    ************************************Display bar graph***********************************
+    */
+
+    for(int a = 0; a < i;a++)
+    {
+         printf("\n");
+         printf("\n\tITEMID : %d  SALES : %d\n",salesDetails[a][0],salesDetails[a][1]);
+         printf("\t");
+         for(int b=0;b<salesDetails[a][1];b++)
+         {
+            printf("\xDB");
+         }
+    }
+
+
+    /*
+    ************************************End of Display bar graph***********************************
+    */
 
     int selectOption;
 
-    printf("\n\tPress 1 - Back to Main Menu : ");
+    printf("\n\n\n\tPress 1 - Back to Main Menu : ");
     scanf("%d",&selectOption);
 
     if(selectOption == 1 )
